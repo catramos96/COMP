@@ -1,0 +1,22 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */
+PARSER_BEGIN(hw2)package test;
+
+public class hw2{  public static void main(String args []) throws ParseException  {
+  	System.out.println("Input an expression that respects de regx (a*bb* | aa*b*e* | ef)");
+  	hw2 parser = new hw2(System.in);
+  		  try{	    parser.checkInput();	  }	  catch (Exception e) {	    System.out.println("Wrong expression");	  }  }}PARSER_END(hw2)SKIP :{
+  " " | "\r" | "\t" | "\n"
+}//symbols to process
+TOKEN :
+{
+  <EXPRESSION: (("a")*"b"("b")* | "a"("a")*"b"("c")* | "ef")("\r")*("\n")>
+}
+
+void checkInput() : {}
+{
+ < EXPRESSION > {
+	System.out.println("Correct expression");
+ }
+}
