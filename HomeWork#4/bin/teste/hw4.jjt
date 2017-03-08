@@ -1,0 +1,45 @@
+/**
+ * JJTree template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */options{  static = true;}PARSER_BEGIN(hw4)package teste;
+
+public class hw4{  public static void main(String args [])  {    System.out.println("Reading from standard input...");    System.out.print("Enter an expression like \"1+(2+3)*var\" :");    new hw4(System.in);    try    {      SimpleNode n = hw4.Start();      n.dump("");      System.out.println("Accept");    }    catch (Exception e)    {      System.out.println("Reject");      System.out.println(e.getMessage());    }  }}PARSER_END(hw4)SKIP :{  " " | "\r" | "\t"}TOKEN :{  < INT : (["0" - "9"])+ > |
+  <  LF : "\n" > |
+  < MULT : "*" > |
+  < DIV : "/" > |
+  < SUM : "+" > |
+  < SUB : "-" >}
+/*
+ * Start -> Expr
+ */SimpleNode Start() :{}{  Expr() < LF >  {    return jjtThis;  }}
+/*
+ * Expr -> Term ExprP
+ */void Expr() :{}{ Term() ExprP()}
+
+/*
+ * Term -> INT TermP
+ */
+void Term() :
+{}
+{
+< INT > TermP()
+}
+
+/*
+ * ExprP -> “+” Term ExprP
+ * ExprP -> “-” Term ExprP
+ * ExprP -> e
+ */
+void ExprP() :
+{}
+{     [( < SUM > | < SUB >) Term() ExprP()]
+ }
+
+/*
+ * TermP -> “*” INT TermP
+ * TermP -> “/” INT TermP
+ * TermP -> e
+ */
+void TermP() :
+{}
+{         [( < MULT > | < DIV >) < INT > TermP()]
+}
